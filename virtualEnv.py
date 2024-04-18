@@ -521,6 +521,10 @@ def upload_github():
                 f'git remote add origin https://github.com/pyCampaDB/{my_git}.git',
                 shell=True, check=True, capture_output=True
                 )
+            
+        pull = input('Do you want to pull the repository? [Y/N]: ')
+        if pull in ['Y', 'y']:
+            git_pull()
         print('\npush\n')
         runSubprocess(f'git push -u origin main', shell=True, check=True)
         print('\nProject uploaded to GitHub\n')
@@ -546,6 +550,23 @@ def git_remove_origin():
         )
     except CalledProcessError as cp:
         print(f'An error occurred: {cp.returncode}')
+
+def git_pull():
+    remote = input(
+        'Enter the remote name'
+    )
+    branch = input(
+        'Enter the branch name: '
+    )
+    try:
+        runSubprocess(
+            f'git pull {remote} {branch}',
+            shell=True,
+            check=True
+        )
+    except CalledProcessError as cp:
+        print(f'An error occurred: {cp.returncode}')
+
 
 def git_clone():
     url = input(
@@ -620,7 +641,7 @@ def run():
                           '4. Docker\n'
                           '5. Docker Compose\n'
                           '6. GIT\n'
-                          '(Other). Exit\n'
+                          '(Other). Exit\n\n'
                           'Enter the option: ')
 
         if selection == '1':
