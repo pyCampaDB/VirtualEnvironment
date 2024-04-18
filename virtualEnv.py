@@ -553,7 +553,7 @@ def git_remove_origin():
 
 def git_pull():
     remote = input(
-        'Enter the remote name'
+        'Enter the remote name: '
     )
     branch = input(
         'Enter the branch name: '
@@ -719,7 +719,7 @@ def run():
 
             elif selection == '6':
                 git_option = '1'
-                while git_option in ['1', '2', '3', '4', '5', '6', '7', '8']:
+                while git_option in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
                     git_option = input(
                         '\n******************** GIT ********************\n\n'
                         '1. Upload your project to GitHub\n'
@@ -730,6 +730,7 @@ def run():
                         '6. git checkout\n'
                         '7. git merge\n'
                         '8. Display the availables local branches of the repository'
+                        '9. git pull\n'
                         '\n'
                         '(Other) Exit GIT\n\n'
                         'Enter your choice: '
@@ -744,6 +745,7 @@ def run():
                     elif git_option == '6': git_checkout()
                     elif git_option == '7': git_merge()
                     elif git_option == '8': git_branch()
+                    elif git_option == '9': git_pull()
                 print('\n******************** EXIT GIT ********************\n\n')
 
 ######################################### MAIN ############################################################################
