@@ -2,3 +2,4 @@
 logs/
 .dockerignore
 assets/
+pycampadb/
