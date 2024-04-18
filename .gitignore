@@ -3,3 +3,6 @@ logs/
 .dockerignore
 assets/
 pycampadb/
+pycampadb/Lib
+pycampadb/Scripts/
+pycampadb/pyvenv.cfg
