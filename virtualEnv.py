@@ -511,22 +511,26 @@ def upload_github():
             first_upload = input('Enter if it is your first commit [Y/N]: ')
             if first_upload not in ['Y', 'y', 'N', 'n']:
                 print('\nInvalid option\n')
-        
+        branch = 'main'
+        remote = 'origin'
         if first_upload in ['Y', 'y']:
-            runSubprocess('git branch -M main', shell=True, check=True)
+            branch = input('Enter your branch name: ')
+            remote = input('Enter your remote name: ')
+            runSubprocess(f'git branch -M {branch}', 
+                          shell=True, check=True)
             print('\ngit branch\n')
             my_git = input('Enter repository name: ')
-            print('\nremote add origin\n')
+            print(f'\nremote add {remote}\n')
             runSubprocess(
-                f'git remote add origin https://github.com/pyCampaDB/{my_git}.git',
+                f'git remote add {remote} https://github.com/pyCampaDB/{my_git}.git',
                 shell=True, check=True, capture_output=True
                 )
             
-        pull = input('Do you want to pull the repository? [Y/N]: ')
+        pull = input('Do you want to make a pull? [Y/N]: ')
         if pull in ['Y', 'y']:
-            git_pull()
+            git_pull(remote, branch)
         print('\npush\n')
-        runSubprocess(f'git push -u origin main', shell=True, check=True)
+        runSubprocess(f'git push -u {remote} {branch}', shell=True, check=True)
         print('\nProject uploaded to GitHub\n')
     except CalledProcessError as cp:
         print(f'\nCalledProcessError: {cp.stderr}\n')
@@ -551,13 +555,15 @@ def git_remove_origin():
     except CalledProcessError as cp:
         print(f'An error occurred: {cp.returncode}')
 
-def git_pull():
-    remote = input(
-        'Enter the remote name: '
-    )
-    branch = input(
-        'Enter the branch name: '
-    )
+def git_pull(remote=None, branch=None):
+    if remote == None:    
+        remote = input(
+            'Enter the remote name: '
+        )
+    if branch == None:
+        branch = input(
+            'Enter the branch name: '
+        )
     try:
         runSubprocess(
             f'git pull {remote} {branch}',
@@ -634,15 +640,17 @@ def run():
         STANDARD_PACKAGE.append(key.strip())
     selection = '1'
     while selection in ['1', '2', '3', '4', '5', '6']:
-        selection = input('\n'
-                          '1. CMD\n'
-                          '2. Run Script\n'
-                          '3. Virtual Environment Settings\n'
-                          '4. Docker\n'
-                          '5. Docker Compose\n'
-                          '6. GIT\n'
-                          '(Other). Exit\n\n'
-                          'Enter the option: ')
+        selection = input(
+            '\n******************** SETUP ********************\n'
+            '\n'
+            '1. CMD\n'
+            '2. Run Script\n'
+            '3. Virtual Environment Settings\n'
+            '4. Docker\n'
+            '5. Docker Compose\n'
+            '6. GIT\n'
+            '(Other). Exit\n\n'
+            'Enter the option: ')
 
         if selection == '1':
             try:
@@ -747,7 +755,7 @@ def run():
                     elif git_option == '8': git_branch()
                     elif git_option == '9': git_pull()
                 print('\n******************** EXIT GIT ********************\n\n')
-
+    print('\n******************** EXIT SETUP ********************\n')
 ######################################### MAIN ############################################################################
 if __name__ == '__main__':
     run()
