@@ -737,7 +737,7 @@ def run():
                         '5. Send local commits to a remote repository\n'
                         '6. git checkout\n'
                         '7. git merge\n'
-                        '8. Display the availables local branches of the repository'
+                        '8. Display the availables local branches of the repository\n'
                         '9. git pull\n'
                         '\n'
                         '(Other) Exit GIT\n\n'
